@@ -9,4 +9,8 @@ export class CourseService {
     getCourseById(id: string): string {
         return `Get Course with ID: ${id} - from Service`;
     }
+
+    createCourse(): string {
+        return 'Create Course - from service'
+    }
 }
