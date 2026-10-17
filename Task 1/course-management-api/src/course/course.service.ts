@@ -21,4 +21,8 @@ export class CourseService {
     patchCourse (id: string): string{
         return `Patch Course ${id} - from Service`;
     }
+
+    deleteCourse(id: string): string{
+        return `Delete Course ${id} - from Service`
+    }
 }
