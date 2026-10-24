@@ -1,12 +1,5 @@
 import { Type } from 'class-transformer';
-import {
-  IsString,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  Min,
-  Max,
-} from 'class-validator';
+import {IsString,IsNotEmpty,IsNumber,IsOptional,Min,Max} from 'class-validator';
 
 export class CreateCourseDto {
   @IsString()
