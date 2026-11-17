@@ -8,6 +8,7 @@ import {
   Patch,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
@@ -30,9 +31,24 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
+  @Get('search')
+  search(@Query('keyword') keyword: string) {
+    return this.productsService.search(keyword);
+  }
+
+  @Get('category/:cat')
+  findByCategory(@Param('cat') category: string) {
+    return this.productsService.findByCategory(category);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id);
+  }
+
+  @Patch(':id/toggle')
+  toggleActive(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.toggleActive(id);
   }
 
   @Patch(':id')

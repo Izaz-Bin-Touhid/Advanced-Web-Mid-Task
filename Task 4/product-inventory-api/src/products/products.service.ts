@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Products } from './entities/products.entity.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
@@ -101,6 +101,47 @@ export class ProductsService {
     return {
       message: 'Product deleted successfully',
       id,
+    };
+  }
+
+  async findByCategory(category: string) {
+    const products = await this.productsRepo.find({
+      where: {
+        category,
+      },
+    });
+
+    return {
+      message: 'Products fetched by category',
+      count: products.length,
+      data: products,
+    };
+  }
+
+  async search(keyword: string) {
+    const products = await this.productsRepo.find({
+      where: {
+        name: ILike(`%${keyword}%`),
+      },
+    });
+
+    return {
+      message: 'Product search results',
+      count: products.length,
+      data: products,
+    };
+  }
+
+  async toggleActive(id: number) {
+    const result = await this.findOne(id);
+    const product = result.data;
+
+    product.isActive = !product.isActive;
+    const updatedProduct = await this.productsRepo.save(product);
+
+    return {
+      message: 'Product active status toggled',
+      data: updatedProduct,
     };
   }
 }
